@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" android:background="@color/bg_primary"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:fillViewport="true">
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_primary"
+    android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer"
+    tools:context=".fragment.HomeFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_primary"
+        android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer">
+
+        <!--  MAIN CONTENT-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:keepScreenOn="true"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/browse_anime"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textAllCaps="true"
+            android:fontFamily="@font/poppins_medium"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="50dp"
+            />
+        <!--  END MAIN CONTENT-->
+
+
+        <!-- BOTTOM NAVIGATION -->
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:fitsSystemWindows="true">-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/fullscreen_content_controls"-->
+<!--                style="@style/Widget.Theme.ImOtaku.ButtonBar.Fullscreen"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="bottom|center_horizontal"-->
+<!--                android:orientation="horizontal"-->
+<!--                tools:ignore="UselessParent">-->
+
+<!--                <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/bottom_navigation"-->
+<!--                    app:itemBackground="@color/bg_primary"-->
+<!--                    app:itemTextColor="@color/primary_light"-->
+<!--                    app:itemIconTint="@color/primary_light"-->
+<!--                    app:menu="@menu/bottom_menu_navigation"-->
+<!--                    />-->
+
+<!--            </LinearLayout>-->
+<!--        </FrameLayout>-->
+
+    </FrameLayout>
+
+</FrameLayout>
+</ScrollView>
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/genres"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginHorizontal="10dp"-->
+    <!--        android:keepScreenOn="true"-->
+    <!--        android:gravity="center"-->
+    <!--        android:layout_marginTop="330dp"-->
+    <!--        android:text="@string/genre"-->
+    <!--        android:textAllCaps="true"-->
+    <!--        android:fontFamily="@font/poppins_medium"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="18sp"-->
+    <!--        android:textStyle="bold" />-->
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/recyclerView2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="370dp"/>-->
+

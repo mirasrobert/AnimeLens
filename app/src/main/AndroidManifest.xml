@@ -11,7 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ImOtaku">
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".GanreActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_ganre"
+            android:theme="@style/Theme.ImOtaku.Fullscreen"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

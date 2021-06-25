@@ -46,8 +46,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
           holder.score_no.setText(animeList.get(position).getScore());
 
           String isAiring = animeList.get(position).isAiring() ? "Currently airing" : "Completed";
-
-
+          holder.airing.setText(isAiring);
 
           // Use Glide library to display images
          Glide.with(context)

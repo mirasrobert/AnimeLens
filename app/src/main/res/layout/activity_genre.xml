@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_primary"
+        android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer"
+        tools:context=".GanreActivity">
+
+        <!-- The primary full-screen view. This can be replaced with whatever view
+             is needed to present your content, e.g. VideoView, SurfaceView,
+             TextureView, etc. -->
+        <TextView
+            android:id="@+id/fullscreen_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="ANIME GENRE"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <!-- This FrameLayout insets its children based on system windows using
+             android:fitsSystemWindows. -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_primary"
+            android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer"
+            tools:context=".GanreActivity">
+
+            <!-- The primary full-screen view. This can be replaced with whatever view
+                 is needed to present your content, e.g. VideoView, SurfaceView,
+                 TextureView, etc. -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:keepScreenOn="true"
+                android:text="ANIME GENRE"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <!-- This FrameLayout insets its children based on system windows using
+                 android:fitsSystemWindows. -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true">
+
+                <LinearLayout
+                    android:id="@+id/fullscreen_content_controls"
+                    style="@style/Widget.Theme.ImOtaku.ButtonBar.Fullscreen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:orientation="horizontal"
+                    tools:ignore="UselessParent">
+
+                    <com.google.android.material.bottomnavigation.BottomNavigationView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bottom_navigation"
+                        app:itemBackground="@color/bg_primary"
+                        app:itemTextColor="@color/primary_light"
+                        app:itemIconTint="@color/primary_light"
+                        app:menu="@menu/bottom_menu_navigation"
+                        />
+
+                </LinearLayout>
+            </FrameLayout>
+
+        </FrameLayout>
+
+    </FrameLayout>
+</ScrollView>
