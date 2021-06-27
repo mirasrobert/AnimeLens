@@ -5,6 +5,10 @@
     <color name="bg_primary">#4f3565</color>
     <color name="primary_light">#bda1f5</color>
 
+    <color name="text_primary">#4f3565</color>
+    <color name="text_light">#9e77ff</color>
+    <color name="text_secondary">#9b84b2</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

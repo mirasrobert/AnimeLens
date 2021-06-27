@@ -2,13 +2,14 @@ package com.example.imotaku;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -22,7 +23,6 @@ import com.example.imotaku.model.Anime;
 import com.example.imotaku.model.Results;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +35,12 @@ import retrofit2.Response;
 public class FullscreenActivity extends AppCompatActivity {
 
     // Init Variables
-    public final String base_url = "https://api.jikan.moe";
+    public final String BASE_URL = "https://api.jikan.moe";
     RecyclerView recyclerView, popularRecycler;
     RecyclerAdapter adapter, popularAdapter;
     public List<Results> listAnimes = new ArrayList<>();
     public List<Results> popularAnimes = new ArrayList<>();
+    public List<Results> thisYearAnimes = new ArrayList<>();
 
     int img[] = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
     String titles[] = {"anime1", "anime2", "anime3", "anime4"};
@@ -47,6 +48,10 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Change status bar color
+        getWindow().setStatusBarColor(ContextCompat.getColor(FullscreenActivity.this, R.color.bg_primary));
+        // Change Action bar color
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bg_primary)));
         setContentView(R.layout.activity_fullscreen);
 
         // Java Code
@@ -55,7 +60,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         // Retrofit Builder
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(base_url)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -67,6 +72,9 @@ public class FullscreenActivity extends AppCompatActivity {
 
         // Popular Animes
         Call<Anime> call2 = animeHTTP.getPopularAnimes();
+
+        // Airing animes
+        Call<Anime> call3 = animeHTTP.getThisYearAnimes();
 
 
         call.enqueue(new Callback<Anime>() {
@@ -91,9 +99,26 @@ public class FullscreenActivity extends AppCompatActivity {
 
                                 popularAnimes = new ArrayList<>(response.body().getResults());
 
-                                if(listAnimes.size() != 0 || popularAnimes.size() != 0) {
-                                    replaceFragment(new HomeFragment(listAnimes, popularAnimes));
-                                }
+                                call3.enqueue(new Callback<Anime>() {
+                                    @Override
+                                    public void onResponse(Call<Anime> call, Response<Anime> response) {
+                                        if (response.code() == 200) {
+                                            Log.i("Logs:", "onResponse: Success");
+
+                                            thisYearAnimes = new ArrayList<>(response.body().getResults());
+
+                                            if(listAnimes.size() != 0 && popularAnimes.size() != 0 && thisYearAnimes.size() != 0) {
+                                                replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Anime> call, Throwable t) {
+
+                                    }
+                                });
+
 
                             } else {
                                 Log.i("Logs:", "onResponse: Failed");
@@ -108,23 +133,10 @@ public class FullscreenActivity extends AppCompatActivity {
                         }
                     });
 
-                    /*
-                    // Init RecyclerView
-                    recyclerView.setLayoutManager(new LinearLayoutManager(FullscreenActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-                    // Pass Data to RecyclerView
-                    adapter = new RecyclerAdapter(listAnimes, FullscreenActivity.this);
-                    // Set Adapter
-                    recyclerView.setAdapter(adapter);
-                    */
-
                 } else {
                     Log.i("Logs:", "onResponse: Failed");
                     Toast.makeText(FullscreenActivity.this, "Please check your connection", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
 
             @Override
@@ -132,6 +144,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
             }
         });
+
 
         //Bottom Navigation Clicks
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -143,14 +156,14 @@ public class FullscreenActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.home:
-                         replaceFragment(new HomeFragment(listAnimes, popularAnimes));
+                         replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
                         break;
 
                     case R.id.genre:
                         replaceFragment(new GenreFragment());
                         break;
 
-                    default: replaceFragment(new HomeFragment(listAnimes, popularAnimes));;
+                    default: replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));;
                 }
 
             }

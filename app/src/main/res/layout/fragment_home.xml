@@ -13,60 +13,148 @@ android:fillViewport="true">
     android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer"
     tools:context=".fragment.HomeFragment">
 
+
     <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frameLayout"
+        android:background="@color/bg_primary"
+        android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer"
+
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_primary"
         android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer">
 
+        <!--   title     -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="140dp"
+            android:layout_marginVertical="25dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="@string/browse_anime"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!--  MAIN CONTENT-->
         <TextView
+            android:id="@+id/browse_anime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="50dp"
-            android:layout_marginHorizontal="10dp"
-            android:keepScreenOn="true"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/browse_anime"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textAllCaps="true"
+            android:layout_marginTop="110dp"
             android:fontFamily="@font/poppins_medium"
-            android:textStyle="bold" />
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="TOP ANIME"
+            android:textAllCaps="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+            app:layout_constraintHorizontal_bias="0.057"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="50dp"
-            />
+            app:layout_constraintBottom_toTopOf="@+id/popular_anime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/browse_anime" />
 
         <!--   RECYCLERVIEW 2     -->
 
-            <TextView
-                android:id="@+id/popular_anime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:keepScreenOn="true"
-                android:gravity="center"
-                android:layout_marginTop="390dp"
-                android:text="@string/popular_anime"
-                android:textAllCaps="true"
-                android:fontFamily="@font/poppins_medium"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/popular_anime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="POPULAR ANIME MOVIES"
+            android:textAllCaps="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/popularRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="430dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popularRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popular_anime" />
 
-            <!--    END MAIN CONTENT      -->
+        <ImageView
+            android:id="@+id/ic_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_info" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo" />
+
+        <!--   RECYCLER 3     -->
+        <TextView
+            android:id="@+id/this_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:keepScreenOn="true"
+            android:text="This Year"
+            android:textAllCaps="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popularRecycler" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/thisYearRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/this_year" />
+
+        <!--    END MAIN CONTENT      -->
 
 
         <!-- BOTTOM NAVIGATION -->
@@ -97,7 +185,7 @@ android:fillViewport="true">
 <!--            </LinearLayout>-->
 <!--        </FrameLayout>-->
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
 </ScrollView>
