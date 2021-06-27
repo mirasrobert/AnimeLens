@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bg_primary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
 
@@ -68,7 +68,6 @@
                 app:itemIconTint="@color/primary_light"
                 app:menu="@menu/bottom_menu_navigation"
                 />
-
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

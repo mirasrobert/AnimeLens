@@ -14,4 +14,7 @@ public interface AnimeHTTP {
 
     @GET("/v3/search/anime?status=publishing&order_by=score&rated=r17")
     Call<Anime> getAnimes();
+
+    @GET("v3/search/anime?order_by=score&type=movie")
+    Call<Anime> getPopularAnimes();
 }

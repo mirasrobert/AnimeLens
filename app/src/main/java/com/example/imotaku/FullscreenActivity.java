@@ -1,9 +1,6 @@
 package com.example.imotaku;
 
-import android.annotation.SuppressLint;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,13 +9,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.imotaku.API.AnimeHTTP;
@@ -26,10 +19,10 @@ import com.example.imotaku.adapter.RecyclerAdapter;
 import com.example.imotaku.fragment.GenreFragment;
 import com.example.imotaku.fragment.HomeFragment;
 import com.example.imotaku.model.Anime;
-import com.example.imotaku.model.JSONResponse;
 import com.example.imotaku.model.Results;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +36,10 @@ public class FullscreenActivity extends AppCompatActivity {
 
     // Init Variables
     public final String base_url = "https://api.jikan.moe";
-    RecyclerView recyclerView;
-    RecyclerAdapter adapter;
-    public List<Results> listAnimes;
+    RecyclerView recyclerView, popularRecycler;
+    RecyclerAdapter adapter, popularAdapter;
+    public List<Results> listAnimes = new ArrayList<>();
+    public List<Results> popularAnimes = new ArrayList<>();
 
     int img[] = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
     String titles[] = {"anime1", "anime2", "anime3", "anime4"};
@@ -57,7 +51,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         // Java Code
         recyclerView = findViewById(R.id.recyclerView);
-        //recyclerView2 = findViewById(R.id.recyclerView2);
+        popularRecycler = findViewById(R.id.popularRecycler);
 
         // Retrofit Builder
         Retrofit retrofit = new Retrofit.Builder()
@@ -68,7 +62,12 @@ public class FullscreenActivity extends AppCompatActivity {
         // Instance for Interface
         AnimeHTTP animeHTTP = retrofit.create(AnimeHTTP.class);
 
+        // Browse anime
         Call<Anime> call = animeHTTP.getAnimes();
+
+        // Popular Animes
+        Call<Anime> call2 = animeHTTP.getPopularAnimes();
+
 
         call.enqueue(new Callback<Anime>() {
             @Override
@@ -81,6 +80,35 @@ public class FullscreenActivity extends AppCompatActivity {
 
                     listAnimes = new ArrayList<>(response.body().getResults());
 
+                    // Call enqueue for popular anime
+                    call2.enqueue(new Callback<Anime>() {
+                        @Override
+                        public void onResponse(Call<Anime> call, Response<Anime> response) {
+                            // If Response is success
+                            if (response.code() == 200) {
+
+                                Log.i("Logs:", "onResponse: Success");
+
+                                popularAnimes = new ArrayList<>(response.body().getResults());
+
+                                if(listAnimes.size() != 0 || popularAnimes.size() != 0) {
+                                    replaceFragment(new HomeFragment(listAnimes, popularAnimes));
+                                }
+
+                            } else {
+                                Log.i("Logs:", "onResponse: Failed");
+                                Toast.makeText(FullscreenActivity.this, "Please check your connection", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Anime> call, Throwable t) {
+
+                        }
+                    });
+
+                    /*
                     // Init RecyclerView
                     recyclerView.setLayoutManager(new LinearLayoutManager(FullscreenActivity.this, LinearLayoutManager.HORIZONTAL, false));
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -89,17 +117,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     adapter = new RecyclerAdapter(listAnimes, FullscreenActivity.this);
                     // Set Adapter
                     recyclerView.setAdapter(adapter);
-
-
-                    /*
-                    // Init RecyclerView2
-                    recyclerView2.setLayoutManager(new LinearLayoutManager(FullscreenActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                    recyclerView2.setItemAnimator(new DefaultItemAnimator());
-
-                    // Pass Data to RecyclerView
-                    adapter2 = new RecyclerAdapter(listAnimes, FullscreenActivity.this);
-                    // Set Adapter
-                    recyclerView2.setAdapter(adapter2);
                     */
 
                 } else {
@@ -116,7 +133,6 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
-
         //Bottom Navigation Clicks
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -127,21 +143,19 @@ public class FullscreenActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.home:
-                        replaceFragment(new HomeFragment(listAnimes));
+                         replaceFragment(new HomeFragment(listAnimes, popularAnimes));
                         break;
 
                     case R.id.genre:
                         replaceFragment(new GenreFragment());
                         break;
 
-                    default: return;
+                    default: replaceFragment(new HomeFragment(listAnimes, popularAnimes));;
                 }
 
             }
 
         });
-
-        //replaceFragment(new HomeFragment(listAnimes));
 
     }
 

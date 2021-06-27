@@ -42,7 +42,31 @@ android:fillViewport="true">
             android:layout_marginTop="100dp"
             android:layout_marginBottom="50dp"
             />
-        <!--  END MAIN CONTENT-->
+
+        <!--   RECYCLERVIEW 2     -->
+
+            <TextView
+                android:id="@+id/popular_anime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:keepScreenOn="true"
+                android:gravity="center"
+                android:layout_marginTop="390dp"
+                android:text="@string/popular_anime"
+                android:textAllCaps="true"
+                android:fontFamily="@font/poppins_medium"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="430dp"/>
+
+            <!--    END MAIN CONTENT      -->
 
 
         <!-- BOTTOM NAVIGATION -->
@@ -78,24 +102,5 @@ android:fillViewport="true">
 </FrameLayout>
 </ScrollView>
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/genres"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginHorizontal="10dp"-->
-    <!--        android:keepScreenOn="true"-->
-    <!--        android:gravity="center"-->
-    <!--        android:layout_marginTop="330dp"-->
-    <!--        android:text="@string/genre"-->
-    <!--        android:textAllCaps="true"-->
-    <!--        android:fontFamily="@font/poppins_medium"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        android:textSize="18sp"-->
-    <!--        android:textStyle="bold" />-->
 
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/recyclerView2"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="370dp"/>-->
 
