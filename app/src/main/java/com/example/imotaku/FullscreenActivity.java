@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.example.imotaku.fragment.GenreFragment;
 import com.example.imotaku.fragment.HomeFragment;
 import com.example.imotaku.model.Anime;
 import com.example.imotaku.model.Results;
+import com.example.imotaku.model.TopAnime;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -38,12 +40,12 @@ public class FullscreenActivity extends AppCompatActivity {
     public final String BASE_URL = "https://api.jikan.moe";
     RecyclerView recyclerView, popularRecycler;
     RecyclerAdapter adapter, popularAdapter;
-    public List<Results> listAnimes = new ArrayList<>();
-    public List<Results> popularAnimes = new ArrayList<>();
-    public List<Results> thisYearAnimes = new ArrayList<>();
+    public List<Results> listAnimes, popularAnimes, thisYearAnimes = new ArrayList<>();
 
-    int img[] = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
-    String titles[] = {"anime1", "anime2", "anime3", "anime4"};
+    Call<Anime> call2, call3;
+    Call<TopAnime> call;
+
+    private RecyclerAdapter.RecyclerViewClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,25 +70,63 @@ public class FullscreenActivity extends AppCompatActivity {
         AnimeHTTP animeHTTP = retrofit.create(AnimeHTTP.class);
 
         // Browse anime
-        Call<Anime> call = animeHTTP.getAnimes();
+        call = animeHTTP.getTopAnimes();
 
         // Popular Animes
-        Call<Anime> call2 = animeHTTP.getPopularAnimes();
+        call2 = animeHTTP.getPopularAnimes();
 
         // Airing animes
-        Call<Anime> call3 = animeHTTP.getThisYearAnimes();
+        call3 = animeHTTP.getThisYearAnimes();
 
+        getAndLoadDataFromAPI();
 
-        call.enqueue(new Callback<Anime>() {
+        //Bottom Navigation Clicks
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // If Bottom Navigation is Clicked
+        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
-            public void onResponse(Call<Anime> call, Response<Anime> response) {
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.home:
+                         replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
+                        break;
+
+                    case R.id.genre:
+                        startActivity(new Intent(FullscreenActivity.this, GenreActivity.class));
+                        break;
+
+                    default: replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));;
+                }
+
+            }
+
+        });
+
+    }
+
+    // Replace the frame layout with FRAGMENT
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // Replace the Activity with FRAGMENT
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.commit();
+
+    }
+
+    private void getAndLoadDataFromAPI() {
+        call.enqueue(new Callback<TopAnime>() {
+            @Override
+            public void onResponse(Call<TopAnime> call, Response<TopAnime> response) {
 
                 // If response is success
                 if (response.code() == 200) {
 
                     Log.i("Logs:", "onResponse: Success");
 
-                    listAnimes = new ArrayList<>(response.body().getResults());
+                    listAnimes = new ArrayList<>(response.body().getTop());
 
                     // Call enqueue for popular anime
                     call2.enqueue(new Callback<Anime>() {
@@ -140,45 +180,10 @@ public class FullscreenActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Anime> call, Throwable t) {
+            public void onFailure(Call<TopAnime> call, Throwable t) {
 
             }
         });
-
-
-        //Bottom Navigation Clicks
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        // If Bottom Navigation is Clicked
-        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
-            @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.home:
-                         replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
-                        break;
-
-                    case R.id.genre:
-                        replaceFragment(new GenreFragment());
-                        break;
-
-                    default: replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));;
-                }
-
-            }
-
-        });
-
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Replace the Activity with FRAGMENT
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
-        fragmentTransaction.commit();
-
     }
 
 }

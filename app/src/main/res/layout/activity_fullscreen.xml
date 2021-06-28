@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_primary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_primary"
     android:fillViewport="true">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="675dp"
+        android:layout_height="match_parent"
         android:background="@color/bg_primary"
         android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer"
         android:id="@+id/frameLayout"
@@ -80,31 +80,15 @@
     </FrameLayout>
 
     <!-- Bottom  Navigatiion -->
-    <FrameLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_navigation"
+        app:itemBackground="@color/bg_primary"
+        app:itemTextColor="@color/primary_light"
+        app:itemIconTint="@color/primary_light"
+        app:menu="@menu/bottom_menu_navigation"
         android:layout_alignParentBottom="true"
-        android:fitsSystemWindows="true">
+        />
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="@style/Widget.Theme.ImOtaku.ButtonBar.Fullscreen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/bg_primary"
-            android:layout_gravity="bottom|center_horizontal"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bottom_navigation"
-                app:itemBackground="@color/bg_primary"
-                app:itemTextColor="@color/primary_light"
-                app:itemIconTint="@color/primary_light"
-                app:menu="@menu/bottom_menu_navigation"
-                />
-        </LinearLayout>
-    </FrameLayout>
 </RelativeLayout>

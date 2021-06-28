@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--  #4f3565 #764f96  -->
     <color name="bg_primary_light">#9e77ff</color>
-    <color name="bg_primary">#4f3565</color>
+    <color name="bg_primary">#694686</color>
     <color name="primary_light">#bda1f5</color>
+
 
     <color name="text_primary">#4f3565</color>
     <color name="text_light">#9e77ff</color>
-    <color name="text_secondary">#9b84b2</color>
+    <color name="text_secondary">#b3a1c4</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

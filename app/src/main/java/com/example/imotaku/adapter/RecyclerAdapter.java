@@ -21,10 +21,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     List<Results> animeList;
     Context context;
+    private RecyclerViewClickListener listener;
 
-    public RecyclerAdapter(List<Results> animeList, Context context) {
+    public RecyclerAdapter(List<Results> animeList, Context context, RecyclerViewClickListener listener) {
         this.animeList = animeList;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -59,7 +61,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return this.animeList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView title, airing, score_no;
         ImageView animeImg;
@@ -71,6 +73,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             title = itemView.findViewById(R.id.title);
             airing =  itemView.findViewById(R.id.airing);
             score_no =  itemView.findViewById(R.id.score_no);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onClick(itemView, getAdapterPosition());
         }
     }
+
+    public interface RecyclerViewClickListener {
+        void onClick(View v, int position);
+    }
+
 }

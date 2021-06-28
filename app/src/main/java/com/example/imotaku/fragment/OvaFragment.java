@@ -1,66 +1,109 @@
 package com.example.imotaku.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.imotaku.AnimeDescriptionActivity;
 import com.example.imotaku.R;
+import com.example.imotaku.adapter.PopularRecyclerAdapter;
+import com.example.imotaku.adapter.RecyclerAdapter;
+import com.example.imotaku.model.Results;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OvaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
 public class OvaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public RecyclerView recyclerView, ovaRecycler, thisYearRecycler;
+    public List<Results> listAnimes, ovaGList, movieGList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerAdapter.RecyclerViewClickListener listener;
 
-    public OvaFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OvaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static OvaFragment newInstance(String param1, String param2) {
-        OvaFragment fragment = new OvaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public OvaFragment(List<Results> listAnimes, List<Results> ovaG, List<Results> movieGList) {
+        this.listAnimes = listAnimes;
+        this.ovaGList = ovaG;
+        this.movieGList = movieGList;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ova, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_ova, container, false);
+
+        // 1. Get reference of RecyclerView
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        ovaRecycler = (RecyclerView) rootView.findViewById(R.id.ovaRecycler);
+        thisYearRecycler = (RecyclerView) rootView.findViewById(R.id.thisYearRecycler);
+
+        // Pass data to recyclerview
+        tvGRecycler();;
+        ovaGRecycler();
+        movieGRecycler();
+
+        return rootView;
+    }
+
+    public void tvGRecycler() {
+        setOnClickListener(this.listAnimes);
+        // 2. Set Layout Manager
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        // 3. Pass and Create Adapter
+        // Pass Data to RecyclerView
+        RecyclerAdapter adapter = new RecyclerAdapter(this.listAnimes, getActivity(), listener);
+
+        // Set Adapter
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void ovaGRecycler() {
+        setOnClickListener(this.ovaGList);
+        // RecyclerView2 - Popular Animes
+        ovaRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        ovaRecycler.setItemAnimator(new DefaultItemAnimator());
+
+        // Pass Data to RecyclerView
+        RecyclerAdapter popularAdapter = new RecyclerAdapter(this.ovaGList, getActivity(), listener);
+        // Set Adapter
+        ovaRecycler.setAdapter(popularAdapter);
+    }
+
+    public void movieGRecycler() {
+
+        setOnClickListener(this.movieGList);
+
+        // RecyclerView2 - Popular Animes
+        thisYearRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        thisYearRecycler.setItemAnimator(new DefaultItemAnimator());
+
+        // Pass Data to RecyclerView
+        RecyclerAdapter thisYearRecyclerAdapter = new RecyclerAdapter(this.movieGList, getActivity(), listener);
+        // Set Adapter
+        thisYearRecycler.setAdapter(thisYearRecyclerAdapter);
+    }
+
+    private void setOnClickListener(List<Results> list) {
+        // Use the click listener interface to go to each anime description by position
+        listener = new RecyclerAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+
+                Intent intent = new Intent(getActivity(), AnimeDescriptionActivity.class);
+                intent.putExtra("title", list.get(position).getTitle());
+                // Start the activity with data passing to the next activity
+                startActivity(intent);
+                //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase(), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

@@ -2,6 +2,7 @@ package com.example.imotaku.API;
 
 import com.example.imotaku.model.Anime;
 import com.example.imotaku.model.Results;
+import com.example.imotaku.model.TopAnime;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ public interface AnimeHTTP {
     // upcming: /v3/search/anime?status=upcoming
     // thisyear: /v3/search/anime?start_date=2021-01-01
     // airing : /v3/search/anime?status=airing
+    // OVA & RATED G  /v3/search/anime?type=ova&rated=g
+    // TV & RATED G /v3/search/anime?type=tv&rated=g
+    // MOVIE & RATED G /v3/search/anime?type=movie&rated=g
+    // top: /v3/top/anime/1/bypopularity
 
     @GET("/v3/search/anime?status=publishing&order_by=score&rated=r17")
     Call<Anime> getAnimes();
@@ -29,5 +34,26 @@ public interface AnimeHTTP {
 
     @GET("/v3/search/anime?status=airing")
     Call<Anime> getAiringAnimes();
+
+    @GET("/v3/search/anime?type=tv&rated=g")
+    Call<Anime> getTvAndRatedGAnimes();
+
+    @GET("/v3/search/anime?type=ova&rated=g")
+    Call<Anime> getOvaAndRatedGAnimes();
+
+    @GET("/v3/search/anime?type=movie&rated=g")
+    Call<Anime> getMovieAndRatedGAnimes();
+
+    @GET("/v3/search/anime?type=tv&rated=pg13")
+    Call<Anime> getTvAndRatedPG13Animes();
+
+    @GET("/v3/search/anime?type=ova&rated=pg13")
+    Call<Anime> getOvaAndRatedPG13Animes();
+
+    @GET("/v3/search/anime?type=movie&rated=pg13")
+    Call<Anime> getMovieAndRatedPG13Animes();
+
+    @GET("/v3/top/anime/1/bypopularity")
+    Call<TopAnime> getTopAnimes();
 
 }
