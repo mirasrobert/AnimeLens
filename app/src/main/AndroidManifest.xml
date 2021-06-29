@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImOtaku">
         <activity
-            android:screenOrientation="portrait"
+
             android:name=".AnimeDescriptionActivity"
             android:label="@string/title_activity_anime_description"></activity>
-
+<!--android:screenOrientation="portrait"-->
         <activity
             android:name=".GenreActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

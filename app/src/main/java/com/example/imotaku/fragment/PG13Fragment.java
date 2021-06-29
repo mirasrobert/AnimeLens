@@ -67,13 +67,13 @@ public class PG13Fragment extends Fragment {
     }
 
     public void ovaPGRecycler() {
-        //setOnClickListener(this.ovaGList);
+        setOnClickListener(this.ovaGList);
         // RecyclerView2 - Popular Animes
         ovaRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         ovaRecycler.setItemAnimator(new DefaultItemAnimator());
 
         // Pass Data to RecyclerView
-        PopularRecyclerAdapter popularAdapter = new PopularRecyclerAdapter(this.ovaGList, getActivity());
+        RecyclerAdapter popularAdapter = new RecyclerAdapter(this.ovaGList, getActivity(), listener);
         // Set Adapter
         ovaRecycler.setAdapter(popularAdapter);
     }
@@ -96,11 +96,17 @@ public class PG13Fragment extends Fragment {
         listener = new RecyclerAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
+
                 Intent intent = new Intent(getActivity(), AnimeDescriptionActivity.class);
-                intent.putExtra("title", list.get(position).getTitle());
+
+                String mal_id = Integer.toString(list.get(position).getMal_id());
+
+                intent.putExtra("mal_id", list.get(position).getMal_id());
                 // Start the activity with data passing to the next activity
                 startActivity(intent);
+                //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase() + mal_id, Toast.LENGTH_SHORT).show();
             }
         };
+
     }
 }

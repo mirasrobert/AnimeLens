@@ -200,7 +200,8 @@
             android:text="Loading..."
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:padding="15dp"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -257,7 +258,7 @@
             android:text="Drama, Action, Adventure, Comedy, Super power, Martial arts"
             android:textColor="@color/teal_200"
             android:textSize="15sp"
-            android:paddingHorizontal="15dp"
+            android:paddingHorizontal="25dp"
             android:paddingVertical="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -269,10 +270,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:padding="15dp"
+            android:paddingHorizontal="25dp"
+            android:paddingVertical="10dp"
             android:text="Moments prior to Naruto Uzumaki's birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc. In order to put an end to the Kyuubi's rampage, the leader of the village, the Fourth Hokage, sacrificed his life and sealed the monstrous beast inside the newborn Naruto. Now, Naruto is a hyperactive and knuckle-headed ninja still living in Konohagakure. Shunned because of the Kyuubi inside him, Naruto struggles to find his place in the village, while his burning desire to become the Hokage of Konohagakure leads him not only to some great new friends, but also some deadly foes. [Written by MAL Rewrite]"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/genre" />
@@ -293,11 +295,11 @@
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="10dp"
 
                 app:autoPlay="false"
-                app:showFullScreenButton="false"
+                app:showFullScreenButton="true"
                 app:showYouTubeButton="false" />
 
         </LinearLayout>

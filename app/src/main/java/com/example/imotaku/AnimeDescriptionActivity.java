@@ -102,9 +102,9 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
 
                         String lastPart = urlParts[urlParts.length - 1]; // get the last index
 
-                        String[] mal_id = lastPart.split("\\?"); // Split the url by question mark
+                        String[] id = lastPart.split("\\?"); // Split the url by question mark
 
-                        videoId =  mal_id[0];
+                        videoId =  id[0];
                     }
 
                      url = response.body().getUrl();
