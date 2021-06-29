@@ -50,8 +50,8 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Change status bar color
-        getWindow().setStatusBarColor(ContextCompat.getColor(FullscreenActivity.this, R.color.bg_primary));
+
+
         // Change Action bar color
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bg_primary)));
         setContentView(R.layout.activity_fullscreen);

@@ -24,6 +24,9 @@ public interface AnimeHTTP {
     // top: /v3/top/anime/1/bypopularity
     // single anime: /v3/anime/{id}
 
+    // r17 : /v3/search/anime?type=movie&rated=r17&order_by=score
+    // /v3/search/anime?type=tv&rated=r17&order_by=score
+
     @GET("/v3/search/anime?status=publishing&order_by=score&rated=r17")
     Call<Anime> getAnimes();
 
@@ -63,5 +66,15 @@ public interface AnimeHTTP {
     // Single Anime
     @GET("/v3/anime/{id}")
     Call<SingleAnime> getSingleAnime(@Path("id") int mal_id);
+
+    @GET("/v3/search/anime?type=tv&rated=r17&order_by=score")
+    Call<Anime> getTvAndRatedR17Animes();
+
+    @GET("/v3/search/anime?type=ova&rated=r17&order_by=score")
+    Call<Anime> getOvaAndRatedR17Animes();
+
+    @GET("/v3/search/anime?type=movie&rated=r17&order_by=score")
+    Call<Anime> getMovieAndRatedR17Animes();
+
 
 }

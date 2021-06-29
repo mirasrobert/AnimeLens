@@ -48,8 +48,8 @@ public class GenreActivity extends AppCompatActivity {
     RecyclerView recyclerView, popularRecycler;
     RecyclerAdapter adapter, popularAdapter;
 
-    public List<Results> listAnimes,ovaG,movieG, tvPG, ovaPG, moviePG = new ArrayList<>();
-    Call<Anime> call, tvRatedG, MovieRatedG, ovaRatedPG13,tvRatedPG13,MovieRatedPG13;
+    public List<Results> listAnimes,ovaG,movieG, tvPG, ovaPG, moviePG, ovaRatedR17List,tvRatedR17List, MovieRatedR17List = new ArrayList<>();
+    Call<Anime> call, tvRatedG, MovieRatedG, ovaRatedPG13,tvRatedPG13, MovieRatedPG13, ovaRatedR17,tvRatedR17,MovieRatedR17;
 
     private RecyclerAdapter.RecyclerViewClickListener listener;
 
@@ -73,17 +73,18 @@ public class GenreActivity extends AppCompatActivity {
 
         // Browse anime for rated G
          call = animeHTTP.getOvaAndRatedGAnimes();
-
          tvRatedG = animeHTTP.getTvAndRatedGAnimes();
-
          MovieRatedG = animeHTTP.getMovieAndRatedGAnimes();
 
         // Browse anime for rated PG13
          ovaRatedPG13 = animeHTTP.getOvaAndRatedPG13Animes();
-
          tvRatedPG13 = animeHTTP.getTvAndRatedPG13Animes();
-
          MovieRatedPG13 = animeHTTP.getMovieAndRatedPG13Animes();
+
+         // Browse Anime for rated R17
+        ovaRatedR17 = animeHTTP.getOvaAndRatedR17Animes();
+        tvRatedR17 = animeHTTP.getTvAndRatedR17Animes();
+        MovieRatedR17 = animeHTTP.getMovieAndRatedR17Animes();
 
         // CREATE A CALL TO THE API AND GET THE DATA
         call.enqueue(new Callback<Anime>() {
@@ -169,7 +170,11 @@ public class GenreActivity extends AppCompatActivity {
                                   List<Results> movieG,
                                   List<Results> tvPG,
                                   List<Results> ovaPG,
-                                  List<Results> moviePG) {
+                                  List<Results> moviePG,
+                                  List<Results> tvR17,
+                                  List<Results> ovaR17,
+                                  List<Results> movieR17) {
+
         tabLayout = findViewById(R.id.tabLayout);
         pager2 = findViewById(R.id.view_pager2);
 
@@ -177,9 +182,12 @@ public class GenreActivity extends AppCompatActivity {
         pager2.setUserInputEnabled(false);
 
         FragmentManager fm = getSupportFragmentManager();
+
+        // Pass data to constructor
         fragmentAdapter = new FragmentAdapter(fm, getLifecycle(),
                 listAnime, ovaG, movieG,
-                tvPG, ovaPG, moviePG);
+                tvPG, ovaPG, moviePG,
+                tvR17, ovaR17, movieR17);
         pager2.setAdapter(fragmentAdapter);
 
         tabLayout.addTab(tabLayout.newTab().setText("G"));
@@ -236,10 +244,56 @@ public class GenreActivity extends AppCompatActivity {
 
                                             // Pass Data to Adapter and ReyclerView
 
-                                            inflateTabLayout(listAnimes, ovaG, movieG, tvPG, ovaPG, moviePG); // Show TabLayout and Data
-                                            // If data has been loaded // Stop the loading
-                                            LottieAnimationView lottieLoading = findViewById(R.id.loadingLottieGenre);
-                                            lottieLoading.setVisibility(View.GONE);
+                                            // For R17
+                                            ovaRatedR17.enqueue(new Callback<Anime>() {
+                                                @Override
+                                                public void onResponse(Call<Anime> call, Response<Anime> response) {
+                                                    if(response.code() == 200) {
+                                                        ovaRatedR17List = new ArrayList<>(response.body().getResults());
+
+                                                        tvRatedR17.enqueue(new Callback<Anime>() {
+                                                            @Override
+                                                            public void onResponse(Call<Anime> call, Response<Anime> response) {
+                                                                if(response.code() == 200) {
+                                                                    tvRatedR17List = new ArrayList<>(response.body().getResults());
+
+                                                                    MovieRatedR17.enqueue(new Callback<Anime>() {
+                                                                        @Override
+                                                                        public void onResponse(Call<Anime> call, Response<Anime> response) {
+                                                                            if(response.code() == 200) {
+                                                                                MovieRatedR17List = new ArrayList<>(response.body().getResults());
+
+                                                                                inflateTabLayout(listAnimes, ovaG, movieG,
+                                                                                        tvPG, ovaPG, moviePG,
+                                                                                        tvRatedR17List, ovaRatedR17List, MovieRatedR17List); // Show TabLayout and Data
+                                                                                // If data has been loaded // Stop the loading
+                                                                                LottieAnimationView lottieLoading = findViewById(R.id.loadingLottieGenre);
+                                                                                lottieLoading.setVisibility(View.GONE);
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onFailure(Call<Anime> call, Throwable t) {
+
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<Anime> call, Throwable t) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<Anime> call, Throwable t) {
+
+                                                }
+                                            });
+
                                         }
                                     }
 
