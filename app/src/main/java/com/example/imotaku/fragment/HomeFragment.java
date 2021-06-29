@@ -104,7 +104,10 @@ public class HomeFragment extends Fragment {
             public void onClick(View v, int position) {
 
                 Intent intent = new Intent(getActivity(), AnimeDescriptionActivity.class);
-                intent.putExtra("title", list.get(position).getTitle());
+
+                //String mal_id = Integer.toString(list.get(position).getMal_id());
+
+                intent.putExtra("mal_id", list.get(position).getMal_id());
                 // Start the activity with data passing to the next activity
                 startActivity(intent);
                 //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase(), Toast.LENGTH_SHORT).show();

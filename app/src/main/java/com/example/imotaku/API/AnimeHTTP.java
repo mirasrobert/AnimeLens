@@ -1,13 +1,16 @@
 package com.example.imotaku.API;
 
 import com.example.imotaku.model.Anime;
+import com.example.imotaku.model.Genre;
 import com.example.imotaku.model.Results;
+import com.example.imotaku.model.SingleAnime;
 import com.example.imotaku.model.TopAnime;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface AnimeHTTP {
     // /v3/search/anime?status=publishing&order_by=score&rated=r17
@@ -19,6 +22,7 @@ public interface AnimeHTTP {
     // TV & RATED G /v3/search/anime?type=tv&rated=g
     // MOVIE & RATED G /v3/search/anime?type=movie&rated=g
     // top: /v3/top/anime/1/bypopularity
+    // single anime: /v3/anime/{id}
 
     @GET("/v3/search/anime?status=publishing&order_by=score&rated=r17")
     Call<Anime> getAnimes();
@@ -55,5 +59,9 @@ public interface AnimeHTTP {
 
     @GET("/v3/top/anime/1/bypopularity")
     Call<TopAnime> getTopAnimes();
+
+    // Single Anime
+    @GET("/v3/anime/{id}")
+    Call<SingleAnime> getSingleAnime(@Path("id") int mal_id);
 
 }

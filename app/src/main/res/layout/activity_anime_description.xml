@@ -86,7 +86,7 @@
                     android:layout_height="match_parent" >
 
                     <ImageView
-                        android:id="@+id/personImg"
+                        android:id="@+id/animeImg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -111,12 +111,13 @@
             android:text="Score"
             android:textColor="@color/white"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/bday"
+            app:layout_constraintBottom_toTopOf="@+id/score"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--  score   -->
         <TextView
-            android:id="@+id/bday"
+            android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="60dp"
@@ -133,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
-            app:layout_constraintEnd_toStartOf="@+id/bday"
+            app:layout_constraintEnd_toStartOf="@+id/score"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_star" />
 
@@ -150,6 +151,7 @@
             app:layout_constraintBottom_toTopOf="@+id/rank"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!--   rank     -->
         <TextView
             android:id="@+id/rank"
             android:layout_width="wrap_content"
@@ -177,6 +179,7 @@
             app:layout_constraintBottom_toTopOf="@+id/favorite"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!--   favorites     -->
         <TextView
             android:id="@+id/favorite"
             android:layout_width="wrap_content"
@@ -252,9 +255,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:text="Drama"
+            android:text="Drama, Action, Adventure, Comedy, Super power, Martial arts"
             android:textColor="@color/teal_200"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/status" />
@@ -295,10 +300,10 @@
                 app:autoPlay="false"
                 app:showFullScreenButton="false"
                 app:showYouTubeButton="false"
-                app:videoId="l_98K4_6UQ0" />
+                app:videoId="3KR8_igDs1Y" />
 
         </LinearLayout>
-
+        <!--   3KR8_igDs1Y     -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
