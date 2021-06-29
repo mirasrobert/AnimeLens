@@ -51,4 +51,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
 
+    // Youtube Player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+
+
 }

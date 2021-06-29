@@ -13,7 +13,8 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anime_description);
 
-         animeName = findViewById(R.id.nameTextView);
+
+         animeName = findViewById(R.id.animeTitle);
 
          String title = "No title";
 

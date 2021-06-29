@@ -55,9 +55,6 @@ public class HomeFragment extends Fragment {
         popularAnimesRecycler();
         thisYearAnimesRecycler();
 
-
-
-
         return rootView;
     }
 
