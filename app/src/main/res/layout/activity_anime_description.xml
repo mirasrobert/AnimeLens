@@ -3,15 +3,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_primary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-
+<!--     android:background="@color/bg_primary" -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:background="@color/bg_primary"
+        android:layout_height="match_parent"
         tools:context=".AnimeDescriptionActivity">
 
         <!--    <androidx.cardview.widget.CardView-->
@@ -70,20 +69,19 @@
             <!-- ROW  1 COLUMN 1 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/myCardView"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="5dp"
+                app:cardCornerRadius="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <RelativeLayout
                     android:background="@color/bg_primary"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_width="200dp"
+                    android:layout_height="250dp" >
 
                     <ImageView
                         android:id="@+id/animeImg"
@@ -198,7 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:text="Naurto Shippuden Season 5"
+            android:text="Loading..."
             android:textColor="@color/white"
             android:textSize="25sp"
             android:padding="15dp"
@@ -304,6 +302,132 @@
 
         </LinearLayout>
         <!--   3KR8_igDs1Y     -->
+
+        <TextView
+            android:id="@+id/source_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="Source"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            android:paddingHorizontal="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+        <TextView
+            android:id="@+id/source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="Light Novel"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:paddingHorizontal="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/source_title" />
+
+        <TextView
+            android:id="@+id/popularity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="Popularity"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.942"
+            app:layout_constraintStart_toEndOf="@+id/source_title"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+        <TextView
+            android:id="@+id/popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="999"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popularity_title" />
+
+        <TextView
+            android:id="@+id/rating_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_light"
+            android:paddingHorizontal="15dp"
+            android:text="Rating"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/source" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="PG-13 - Teens 13 or older"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:paddingHorizontal="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rating_title" />
+
+        <TextView
+            android:id="@+id/duration_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="Popularity"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.942"
+            app:layout_constraintStart_toEndOf="@+id/rating_title"
+            app:layout_constraintTop_toBottomOf="@+id/popularity" />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_light"
+            android:text="999"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/duration_title" />
+
+        <Button
+            android:id="@+id/read_more_btn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/custom_button"
+            android:text="Read More"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
