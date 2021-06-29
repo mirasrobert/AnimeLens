@@ -74,6 +74,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 app:cardCornerRadius="30dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -270,7 +271,7 @@
             android:fontFamily="@font/poppins_regular"
             android:padding="15dp"
             android:text="Moments prior to Naruto Uzumaki's birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc. In order to put an end to the Kyuubi's rampage, the leader of the village, the Fourth Hokage, sacrificed his life and sealed the monstrous beast inside the newborn Naruto. Now, Naruto is a hyperactive and knuckle-headed ninja still living in Konohagakure. Shunned because of the Kyuubi inside him, Naruto struggles to find his place in the village, while his burning desire to become the Hokage of Konohagakure leads him not only to some great new friends, but also some deadly foes. [Written by MAL Rewrite]"
-            android:textColor="@color/teal_200"
+            android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -297,8 +298,7 @@
 
                 app:autoPlay="false"
                 app:showFullScreenButton="false"
-                app:showYouTubeButton="false"
-                app:videoId="3KR8_igDs1Y" />
+                app:showYouTubeButton="false" />
 
         </LinearLayout>
         <!--   3KR8_igDs1Y     -->
@@ -390,7 +390,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_light"
-            android:text="Popularity"
+            android:text="Duration"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="normal"
@@ -417,6 +417,7 @@
             android:id="@+id/read_more_btn"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:onClick="readMore"
             android:layout_marginTop="150dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/custom_button"

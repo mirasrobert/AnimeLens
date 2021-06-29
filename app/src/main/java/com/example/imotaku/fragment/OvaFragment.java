@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.imotaku.AnimeDescriptionActivity;
 import com.example.imotaku.R;
@@ -24,6 +25,8 @@ public class OvaFragment extends Fragment {
 
     public RecyclerView recyclerView, ovaRecycler, thisYearRecycler;
     public List<Results> listAnimes, ovaGList, movieGList;
+
+    public RecyclerAdapter recyclerAdapter;
 
     private RecyclerAdapter.RecyclerViewClickListener listener;
 
@@ -99,11 +102,15 @@ public class OvaFragment extends Fragment {
             public void onClick(View v, int position) {
 
                 Intent intent = new Intent(getActivity(), AnimeDescriptionActivity.class);
-                intent.putExtra("title", list.get(position).getTitle());
+
+                String mal_id = Integer.toString(list.get(position).getMal_id());
+
+                intent.putExtra("mal_id", list.get(position).getMal_id());
                 // Start the activity with data passing to the next activity
                 startActivity(intent);
-                //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase() + mal_id, Toast.LENGTH_SHORT).show();
             }
         };
+
     }
 }

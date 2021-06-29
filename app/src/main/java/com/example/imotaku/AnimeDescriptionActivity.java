@@ -1,8 +1,12 @@
 package com.example.imotaku;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,19 +30,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AnimeDescriptionActivity extends AppCompatActivity {
 
+    // Default Values
     public final String BASE_URL = "https://api.jikan.moe";
+    public String url = "";
+    public String videoId = "9jo51nJrO0k";
+    public String background = "No Description";
+    public String ranks = "N/A";
 
     // Views
-    TextView animeName, score, rank, favorite, type, status, episodes, genre, sypnosis;
+    TextView animeName, score, rank, favorite, type, status, episodes, genre, sypnosis, rating, popularity, duration, source;
     ImageView animeImg;
 
     private Call<SingleAnime> singleAnimeCall;
-    private List<SingleAnime> singleAnimeList = new ArrayList<>();
     private List<Genre> genreList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Change status bar color
+        getWindow().setStatusBarColor(ContextCompat.getColor(AnimeDescriptionActivity.this, R.color.bg_primary));
+
         setContentView(R.layout.activity_anime_description);
 
         // Find view ID
@@ -52,6 +63,10 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
         episodes = findViewById(R.id.episodes);
         genre = findViewById(R.id.genre);
         sypnosis = findViewById(R.id.sypnosis);
+        rating = findViewById(R.id.rating);
+        popularity = findViewById(R.id.popularity);
+        duration = findViewById(R.id.duration);
+        source = findViewById(R.id.source);
 
         // Get the ID
         int mal_id = 20;
@@ -80,21 +95,41 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
 
                  if(response.code() == 200) {
 
+                     String trailer_url = (response.body().getTrailer_url() != null) ? response.body().getTrailer_url() : videoId ;
 
+                    if (response.body().getTrailer_url() != null) {
+                        String[] urlParts = trailer_url.split("/"); // Split the url by slash
+
+                        String lastPart = urlParts[urlParts.length - 1]; // get the last index
+
+                        String[] mal_id = lastPart.split("\\?"); // Split the url by question mark
+
+                        videoId =  mal_id[0];
+                    }
+
+                     url = response.body().getUrl();
                      String title = response.body().getTitle();
                      String img = response.body().getImage_url();
                      String scores = response.body().getScore();
-                     String ranks = response.body().getRank();
+                     ranks = (response.body().getRank() != null) ? response.body().getRank() : ranks;
                      String favorites = response.body().getFavorites();
                      String types = response.body().getType();
                      String episode = response.body().getEpisodes();
 
+                     String rating = response.body().getRating();
+                     String source = response.body().getSource();
+                     String popularity = Integer.toString(response.body().getPopularity());
+                     String duration = response.body().getDuration();
+
                      genreList = response.body().getGenres();
 
-                     String background = response.body().getSynopsis();
-                     String trailer_url = response.body().getTrailer_url();
+                     background = (response.body().getSynopsis() != null) ? response.body().getSynopsis() : background;
 
-                     updateUI(title, img, scores, ranks, favorites, types, episode, genreList, background, trailer_url);
+                     // For Youtube Trailer
+                     startYouTubeVideo(videoId);
+
+                     // For Viewss
+                     updateUI(title, img, scores, ranks, favorites, types, episode, genreList, background, rating, popularity, source, duration);
 
                  } else {
                      Toast.makeText(AnimeDescriptionActivity.this, "Please check your connection", Toast.LENGTH_SHORT).show();
@@ -121,23 +156,18 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
                           String episode,
                           List<Genre> genres,
                           String background,
-                          String trailer_url) {
+                          String rate,
+                          String popular,
+                          String sources,
+                          String durations) {
 
-        // Chdck for null values
-        String animeTitle = (title == null) ? "N/A" : title;
-        String animeScore = (scores == null) ? "N/A" : scores;
-        String animeRank = (ranks == null) ? "N/A" : ranks;
-        String animeFavorite = (favorites == null) ? "N/A" : favorites;
-        String animeType = (types == null) ? "N/A" : types;
-        String animeEpisodes = (episode == null) ? "N/A" : "Ep: " + episode;
 
         String animeGenres = "";
+        String animeEpisodes = "Ep: "+ episode;
 
         for(Genre genre : genres) {
                animeGenres += genre.getName() + " ";
         }
-
-        String animeDescription = (background == null) ? "N/A" : background;
 
         // Update the UI with the correct values
 
@@ -146,29 +176,20 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
                 .load(img)
                 .into(animeImg);
 
-        animeName.setText(animeTitle);
-        score.setText(animeScore);
-        rank.setText(animeRank);
-        favorite.setText(animeFavorite);
-        type.setText(animeType);
+        animeName.setText(title);
+        score.setText(scores);
+        rank.setText(ranks);
+        favorite.setText(favorites);
+        type.setText(types);
         episodes.setText(animeEpisodes);
         genre.setText(animeGenres);
-        sypnosis.setText(animeDescription);
-
-        startYouTubeVideo(getYoutubeId(trailer_url));
-
+        sypnosis.setText(background);
+        rating.setText(rate);
+        popularity.setText(popular);
+        duration.setText(durations);
+        source.setText(sources);
     }
 
-    private String getYoutubeId(String url) {
-
-        String[] urlParts = url.split("/"); // Split the url by slash
-
-        String lastPart = urlParts[urlParts.length - 1]; // get the last index
-
-        String[] mal_id = lastPart.split("\\?"); // Split the url by question mark
-
-        return mal_id[0]; // Return the id
-    }
 
     private void startYouTubeVideo(String videoId) {
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player_view);
@@ -182,5 +203,11 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
                 youTubePlayer.cueVideo(videoId, 0);
             }
         });
+    }
+
+    // For Read More Button
+    public void readMore(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 }

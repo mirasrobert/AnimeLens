@@ -53,7 +53,7 @@ public class SingleAnime {
 
     private String rank;
 
-    private String popularity;
+    private int popularity;
 
     private String members;
 
@@ -70,7 +70,7 @@ public class SingleAnime {
     @Expose
     private List<Genre> genres;
 
-    public SingleAnime(String request_hash, boolean request_cached, int request_cache_expiry, int mal_id, String url, String image_url, String trailer_url, String title, String title_english, String title_japanese, String type, String source, String episodes, String status, String airing, String duration, String rating, String score, String scored_by, String rank, String popularity, String members, String favorites, String synopsis, String premiered, String broadcast, List<Genre> genres) {
+    public SingleAnime(String request_hash, boolean request_cached, int request_cache_expiry, int mal_id, String url, String image_url, String trailer_url, String title, String title_english, String title_japanese, String type, String source, String episodes, String status, String airing, String duration, String rating, String score, String scored_by, String rank, int popularity, String members, String favorites, String synopsis, String premiered, String broadcast, List<Genre> genres) {
         this.request_hash = request_hash;
         this.request_cached = request_cached;
         this.request_cache_expiry = request_cache_expiry;
@@ -260,11 +260,11 @@ public class SingleAnime {
         this.rank = rank;
     }
 
-    public String getPopularity() {
+    public int getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(String popularity) {
+    public void setPopularity(int popularity) {
         this.popularity = popularity;
     }
 

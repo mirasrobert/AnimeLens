@@ -110,9 +110,10 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("mal_id", list.get(position).getMal_id());
                 // Start the activity with data passing to the next activity
                 startActivity(intent);
-                //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase() + mal_id, Toast.LENGTH_SHORT).show();
             }
         };
+
     }
 
 }
