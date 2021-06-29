@@ -100,7 +100,7 @@ public class GenreActivity extends AppCompatActivity {
                 // If response is success
                 if (response.code() == 200) {
                     Log.i("Logs:", "onResponse: Success");
-                    listAnimes = new ArrayList<>(response.body().getResults());
+                    ovaG = new ArrayList<>(response.body().getResults());
 
                     tvRatedG.enqueue(new Callback<Anime>() {
                         @Override
@@ -108,7 +108,7 @@ public class GenreActivity extends AppCompatActivity {
 
                             if(response.code() == 200) {
 
-                                ovaG = new ArrayList<>(response.body().getResults());
+                                listAnimes = new ArrayList<>(response.body().getResults());
 
                                 MovieRatedG.enqueue(new Callback<Anime>() {
                                     @Override

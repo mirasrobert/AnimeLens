@@ -44,22 +44,22 @@ public interface AnimeHTTP {
     @GET("/v3/search/anime?status=airing")
     Call<Anime> getAiringAnimes();
 
-    @GET("/v3/search/anime?type=tv&rated=g")
+    @GET("/v3/search/anime?type=tv&rated=g&order_by=score")
     Call<Anime> getTvAndRatedGAnimes();
 
-    @GET("/v3/search/anime?type=ova&rated=g")
+    @GET("/v3/search/anime?type=ova&rated=g&order_by=score")
     Call<Anime> getOvaAndRatedGAnimes();
 
-    @GET("/v3/search/anime?type=movie&rated=g")
+    @GET("/v3/search/anime?type=movie&rated=g&order_by=score")
     Call<Anime> getMovieAndRatedGAnimes();
 
-    @GET("/v3/search/anime?type=tv&rated=pg13")
+    @GET("/v3/search/anime?type=tv&rated=pg13&order_by=score")
     Call<Anime> getTvAndRatedPG13Animes();
 
-    @GET("/v3/search/anime?type=ova&rated=pg13")
+    @GET("/v3/search/anime?type=ova&rated=pg13&order_by=score")
     Call<Anime> getOvaAndRatedPG13Animes();
 
-    @GET("/v3/search/anime?type=movie&rated=pg13")
+    @GET("/v3/search/anime?type=movie&rated=pg13&order_by=score")
     Call<Anime> getMovieAndRatedPG13Animes();
 
     @GET("/v3/top/anime/1/bypopularity")
