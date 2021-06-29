@@ -17,4 +17,24 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <string name="score">Score</string>
+    <string name="_7_55">7.55</string>
+    <string name="rank">Rank</string>
+    <string name="_1431">#1431</string>
+    <string name="favorites">Favorites</string>
+    <string name="_3959">3959</string>
+    <string name="loading">Loading...</string>
+    <string name="tv">TV</string>
+    <string name="finished_airing">Finished Airing</string>
+    <string name="ep_220">ep 220</string>
+    <string name="drama_action_adventure_comedy_super_power_martial_arts">Drama, Action, Adventure, Comedy, Super power, Martial arts</string>
+    <string name="anime_description">Moments prior to Naruto Uzumaki\'s birth, a huge demon known as the Kyuubi, the Nine-Tailed Fox, attacked Konohagakure, the Hidden Leaf Village, and wreaked havoc. In order to put an end to the Kyuubi\'s rampage, the leader of the village, the Fourth Hokage, sacrificed his life and sealed the monstrous beast inside the newborn Naruto. Now, Naruto is a hyperactive and knuckle-headed ninja still living in Konohagakure. Shunned because of the Kyuubi inside him, Naruto struggles to find his place in the village, while his burning desire to become the Hokage of Konohagakure leads him not only to some great new friends, but also some deadly foes. [Written by MAL Rewrite]</string>
+    <string name="source">Source</string>
+    <string name="light_novel">Light Novel</string>
+    <string name="popularity">Popularity</string>
+    <string name="_999">999</string>
+    <string name="rating">Rating</string>
+    <string name="pg_13_teens_13_or_older">PG-13 - Teens 13 or older</string>
+    <string name="duration">Duration</string>
+    <string name="read_more">Read More</string>
 </resources>

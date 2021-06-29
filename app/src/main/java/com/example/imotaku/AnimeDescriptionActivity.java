@@ -62,7 +62,7 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
         status = findViewById(R.id.status);
         episodes = findViewById(R.id.episodes);
         genre = findViewById(R.id.genre);
-        sypnosis = findViewById(R.id.sypnosis);
+        sypnosis = findViewById(R.id.sypnosisTxt);
         rating = findViewById(R.id.rating);
         popularity = findViewById(R.id.popularity);
         duration = findViewById(R.id.duration);
@@ -164,6 +164,7 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
 
         String animeGenres = "";
         String animeEpisodes = "Ep: "+ episode;
+        String animeRank = "#"+ranks;
 
         for(Genre genre : genres) {
                animeGenres += genre.getName() + " ";
@@ -178,7 +179,7 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
 
         animeName.setText(title);
         score.setText(scores);
-        rank.setText(ranks);
+        rank.setText(animeRank);
         favorite.setText(favorites);
         type.setText(types);
         episodes.setText(animeEpisodes);
