@@ -27,6 +27,8 @@ public interface AnimeHTTP {
     // r17 : /v3/search/anime?type=movie&rated=r17&order_by=score
     // /v3/search/anime?type=tv&rated=r17&order_by=score
 
+    // R+ /v3/search/anime?type=tv&rated=r&order_by=score
+
     @GET("/v3/search/anime?status=publishing&order_by=score&rated=r17")
     Call<Anime> getAnimes();
 
@@ -76,5 +78,13 @@ public interface AnimeHTTP {
     @GET("/v3/search/anime?type=movie&rated=r17&order_by=score")
     Call<Anime> getMovieAndRatedR17Animes();
 
+    @GET("/v3/search/anime?type=tv&rated=r&order_by=score")
+    Call<Anime> getTvAndRatedPlusAnimes();
+
+    @GET("/v3/search/anime?type=ova&rated=r&order_by=score")
+    Call<Anime> getOvaAndRatedPlusAnimes();
+
+    @GET("/v3/search/anime?type=movie&rated=r&order_by=score")
+    Call<Anime> getMovieAndRatedPlusAnimes();
 
 }
