@@ -1,5 +1,8 @@
 <resources>
 
+<!-- Theme.AppCompat.NoActionBar   -->
+<!--  Widget.AppCompat.ActionBar  -->
+
     <style name="Widget.Theme.ImOtaku.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>

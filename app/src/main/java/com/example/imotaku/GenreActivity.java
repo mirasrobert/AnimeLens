@@ -58,7 +58,7 @@ public class GenreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Change status bar color
-        getWindow().setStatusBarColor(ContextCompat.getColor(GenreActivity.this, R.color.bg_primary));
+        getWindow().setStatusBarColor(ContextCompat.getColor(GenreActivity.this, R.color.light_blue_600));
         setContentView(R.layout.activity_genre);
 
         // Main Code
@@ -161,10 +161,11 @@ public class GenreActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.home:
                         startActivity(new Intent(GenreActivity.this, FullscreenActivity.class));
+                        finish();
                         break;
-
-                    case R.id.genre:
-                        startActivity(new Intent(GenreActivity.this, FullscreenActivity.class));
+                    case R.id.search:
+                        startActivity(new Intent(GenreActivity.this, SearchActivity.class));
+                        finish();
                         break;
                 }
             }

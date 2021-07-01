@@ -1,11 +1,14 @@
 package com.example.imotaku;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +51,7 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Change status bar color
-        getWindow().setStatusBarColor(ContextCompat.getColor(AnimeDescriptionActivity.this, R.color.bg_primary));
+        getWindow().setStatusBarColor(ContextCompat.getColor(AnimeDescriptionActivity.this, R.color.light_blue_600));
 
         setContentView(R.layout.activity_anime_description);
 
@@ -210,5 +213,26 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
     public void readMore(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.info:
+                Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

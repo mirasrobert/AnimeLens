@@ -13,8 +13,10 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.imotaku.API.AnimeHTTP;
 import com.example.imotaku.adapter.RecyclerAdapter;
@@ -51,7 +53,7 @@ public class FullscreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Change status bar color
-        getWindow().setStatusBarColor(ContextCompat.getColor(FullscreenActivity.this, R.color.bg_primary));
+        getWindow().setStatusBarColor(ContextCompat.getColor(FullscreenActivity.this,  R.color.light_blue_600));
 
         // Change Action bar color
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bg_primary)));
@@ -96,6 +98,11 @@ public class FullscreenActivity extends AppCompatActivity {
 
                     case R.id.genre:
                         startActivity(new Intent(FullscreenActivity.this, GenreActivity.class));
+                        finish();
+                        break;
+                    case R.id.search:
+                        startActivity(new Intent(FullscreenActivity.this, SearchActivity.class));
+                        finish();
                         break;
 
                     default: replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));;
@@ -187,4 +194,24 @@ public class FullscreenActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.info:
+                Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

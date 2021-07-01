@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <!-- ROW  1 COLUMN 1 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/myCardView"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardElevation="15dp"
+        app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/animeImg"
+                android:layout_width="150dp"
+                android:layout_height="170dp"
+                android:padding="10sp"
+                android:src="@drawable/img1" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="160dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="0dp"
+                android:padding="5dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Naruto Naruto"
+                android:textColor="@color/text_light"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_below="@+id/name"
+                android:padding="3dp"
+                android:textColor="@color/text_secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="160dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="05dp"
+                android:text="2021, 2020 Ep"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="160dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/custom_button"
+                android:padding="5dp"
+                android:text="Movie"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:layout_below="@+id/date"
+                />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

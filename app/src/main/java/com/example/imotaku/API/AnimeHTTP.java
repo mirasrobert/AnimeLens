@@ -11,6 +11,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AnimeHTTP {
     // /v3/search/anime?status=publishing&order_by=score&rated=r17
@@ -28,6 +29,8 @@ public interface AnimeHTTP {
     // /v3/search/anime?type=tv&rated=r17&order_by=score
 
     // R+ /v3/search/anime?type=tv&rated=r&order_by=score
+
+    // Search : /v3/search/anime?q=naga&order_by=title
 
     @GET("/v3/search/anime?status=publishing&order_by=score&rated=r17")
     Call<Anime> getAnimes();
@@ -86,5 +89,8 @@ public interface AnimeHTTP {
 
     @GET("/v3/search/anime?type=movie&rated=r&order_by=score")
     Call<Anime> getMovieAndRatedPlusAnimes();
+
+    @GET("/v3/search/anime")
+    Call<Anime> searchAnime(@Query("q") String anime);
 
 }
