@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +27,7 @@ import com.example.imotaku.fragment.HomeFragment;
 import com.example.imotaku.model.Anime;
 import com.example.imotaku.model.Results;
 import com.example.imotaku.model.TopAnime;
+import com.example.imotaku.utility.NetworkChangeListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -37,6 +40,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FullscreenActivity extends AppCompatActivity {
+
+    // For Broadcast Receiver
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
 
     // Init Variables
     public final String BASE_URL = "https://api.jikan.moe";
@@ -53,7 +59,7 @@ public class FullscreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Change status bar color
-        getWindow().setStatusBarColor(ContextCompat.getColor(FullscreenActivity.this,  R.color.light_blue_600));
+        getWindow().setStatusBarColor(ContextCompat.getColor(FullscreenActivity.this, R.color.light_blue_600));
 
         // Change Action bar color
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bg_primary)));
@@ -83,6 +89,11 @@ public class FullscreenActivity extends AppCompatActivity {
 
         getAndLoadDataFromAPI();
 
+        initBottomNavigation();
+
+    }
+
+    private void initBottomNavigation() {
         //Bottom Navigation Clicks
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -93,7 +104,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.home:
-                         replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
+                        replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
                         break;
 
                     case R.id.genre:
@@ -105,13 +116,14 @@ public class FullscreenActivity extends AppCompatActivity {
                         finish();
                         break;
 
-                    default: replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));;
+                    default:
+                        replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
+                        ;
                 }
 
             }
 
         });
-
     }
 
     // Replace the frame layout with FRAGMENT
@@ -155,7 +167,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
                                             thisYearAnimes = new ArrayList<>(response.body().getResults());
 
-                                            if(listAnimes.size() != 0 && popularAnimes.size() != 0 && thisYearAnimes.size() != 0) {
+                                            if (listAnimes.size() != 0 && popularAnimes.size() != 0 && thisYearAnimes.size() != 0) {
                                                 replaceFragment(new HomeFragment(listAnimes, popularAnimes, thisYearAnimes));
                                             }
                                         }
@@ -213,5 +225,19 @@ public class FullscreenActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        // Register our broadcast receiver
+        registerReceiver(networkChangeListener, filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 }

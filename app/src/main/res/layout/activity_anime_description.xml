@@ -45,7 +45,7 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:padding="10sp"
-                        android:src="@drawable/img1" />
+                        android:src="@drawable/img_placeholder_300" />
 
                 </RelativeLayout>
 

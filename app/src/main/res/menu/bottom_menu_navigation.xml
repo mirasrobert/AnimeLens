@@ -19,6 +19,6 @@
         android:title="Search"
         android:iconTint="@color/bg_primary_light"
         app:showAsAction="always"
-        android:icon="@drawable/ic_seach" />
+        android:icon="@drawable/ic_white_search" />
 
 </menu>

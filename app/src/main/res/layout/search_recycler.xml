@@ -55,6 +55,7 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="05dp"
                 android:text="2021, 2020 Ep"
+                android:fontFamily="@font/poppins_regular"
                 android:textSize="15sp"
                 android:textStyle="normal" />
 
@@ -67,6 +68,7 @@
                 android:background="@drawable/custom_button"
                 android:padding="5dp"
                 android:text="Movie"
+                android:fontFamily="@font/poppins_regular"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="normal"
