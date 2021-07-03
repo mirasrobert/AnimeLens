@@ -220,7 +220,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.info:
-                Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Developed by Robert Miras", Toast.LENGTH_SHORT).show();
                 break;
         }
 
