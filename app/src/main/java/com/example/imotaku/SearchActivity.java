@@ -25,6 +25,8 @@ import com.example.imotaku.model.Results;
 import com.example.imotaku.model.TopAnime;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,6 +187,7 @@ public class SearchActivity extends AppCompatActivity {
                 // Start the activity with data passing to the next activity
                 startActivity(intent);
                 //Toast.makeText(getActivity(), list.get(position).getTitle().toLowerCase() + mal_id, Toast.LENGTH_SHORT).show();
+                finish();
             }
         };
 
@@ -196,10 +199,9 @@ public class SearchActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // If Bottom Navigation is Clicked
-        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
                         startActivity(new Intent(SearchActivity.this, FullscreenActivity.class));
@@ -210,10 +212,15 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(new Intent(SearchActivity.this, GenreActivity.class));
                         finish();
                         break;
+
+
+                    case R.id.favorite:
+                        startActivity(new Intent(SearchActivity.this, FavoriteActivity.class));
+                        finish();
+                        break;
                 }
-
+                return false;
             }
-
         });
     }
 

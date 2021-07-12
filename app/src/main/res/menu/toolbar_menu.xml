@@ -7,6 +7,18 @@
         android:id="@+id/settings"
         app:showAsAction="" />
 
+    <item android:id="@+id/feedback"
+        android:title="Feedback"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/developers"
+        android:title="Developers"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/logout"
+        android:title="Logout"
+        app:showAsAction="never" />
+
     <item
         android:title="Info"
         android:id="@+id/info"

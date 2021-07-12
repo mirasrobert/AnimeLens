@@ -113,6 +113,7 @@
         app:itemIconTint="@color/primary_light"
         app:menu="@menu/bottom_menu_navigation"
         android:layout_alignParentBottom="true"
+        app:labelVisibilityMode="labeled"
         />
 
 </RelativeLayout>

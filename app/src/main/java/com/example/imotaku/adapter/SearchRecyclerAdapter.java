@@ -79,7 +79,7 @@ public class SearchRecyclerAdapter extends RecyclerView.Adapter<SearchRecyclerAd
             super(itemView);
 
             animeImg = itemView.findViewById(R.id.animeImg);
-            name = itemView.findViewById(R.id.name);
+            name = itemView.findViewById(R.id.email_enter);
             date =  itemView.findViewById(R.id.date);
             type =  itemView.findViewById(R.id.type);
 

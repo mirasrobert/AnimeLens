@@ -36,6 +36,7 @@
         app:itemTextColor="@color/primary_light"
         app:itemIconTint="@color/primary_light"
         app:menu="@menu/bottom_menu_navigation"
+        app:labelVisibilityMode="labeled"
         />
 
 </LinearLayout>

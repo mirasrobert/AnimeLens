@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/user_background"
+    tools:context=".EditUserActivity">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginBottom="200dp"
+        android:fontFamily="@font/poppins_light"
+        android:text="@string/my_profile"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/poppins_light"
+        android:hint="@string/update_username"
+        app:helperTextTextColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:startIconDrawable="@drawable/ic_person"
+        tools:layout_editor_absoluteX="50dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/user_name"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_update"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppins_light"
+        android:hint="@string/update_email"
+        app:helperTextTextColor="@color/purple"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:startIconDrawable="@drawable/ic_baseline_account_circle_24"
+        tools:layout_editor_absoluteX="50dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pass_update"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/poppins_light"
+        android:hint="@string/update_password"
+
+        app:helperTextTextColor="@color/purple"
+        app:layout_constraintTop_toBottomOf="@+id/email_update"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        tools:layout_editor_absoluteX="50dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/user_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

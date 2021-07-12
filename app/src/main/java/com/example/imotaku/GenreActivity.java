@@ -1,31 +1,40 @@
 package com.example.imotaku;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.airbnb.lottie.Lottie;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.imotaku.API.AnimeHTTP;
 import com.example.imotaku.adapter.FragmentAdapter;
 import com.example.imotaku.adapter.RecyclerAdapter;
-import com.example.imotaku.fragment.HomeFragment;
+
 import com.example.imotaku.model.Anime;
 import com.example.imotaku.model.Results;
+import com.example.imotaku.utility.NetworkChangeListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,17 +48,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GenreActivity extends AppCompatActivity {
 
+    // For Broadcast Receiver
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
+
     TabLayout tabLayout;
     ViewPager2 pager2;
     FragmentAdapter fragmentAdapter;
 
     // Init Variables
     public final String BASE_URL = "https://api.jikan.moe";
-    RecyclerView recyclerView, popularRecycler;
-    RecyclerAdapter adapter, popularAdapter;
 
-    public List<Results> listAnimes,ovaG,movieG, tvPG, ovaPG, moviePG, ovaRatedR17List,tvRatedR17List, MovieRatedR17List, tvRatedPlusList, ovaRatedPlusList, movieRatedPlusList = new ArrayList<>();
-    Call<Anime> call, tvRatedG, MovieRatedG, ovaRatedPG13,tvRatedPG13, MovieRatedPG13, ovaRatedR17,tvRatedR17,MovieRatedR17, tvRatedPlus, ovaRatedPlus, movieRatedPlus;
+    public List<Results> listAnimes, ovaG, movieG, tvPG, ovaPG, moviePG, ovaRatedR17List, tvRatedR17List, MovieRatedR17List, tvRatedPlusList, ovaRatedPlusList, movieRatedPlusList = new ArrayList<>();
+    Call<Anime> call, tvRatedG, MovieRatedG, ovaRatedPG13, tvRatedPG13, MovieRatedPG13, ovaRatedR17, tvRatedR17, MovieRatedR17, tvRatedPlus, ovaRatedPlus, movieRatedPlus;
 
     private RecyclerAdapter.RecyclerViewClickListener listener;
 
@@ -72,19 +82,19 @@ public class GenreActivity extends AppCompatActivity {
         AnimeHTTP animeHTTP = retrofit.create(AnimeHTTP.class);
 
         // Browse anime for rated G
-         call = animeHTTP.getOvaAndRatedGAnimes();
-         tvRatedG = animeHTTP.getTvAndRatedGAnimes();
-         MovieRatedG = animeHTTP.getMovieAndRatedGAnimes();
+        call = animeHTTP.getOvaAndRatedGAnimes();
+        tvRatedG = animeHTTP.getTvAndRatedGAnimes();
+        MovieRatedG = animeHTTP.getMovieAndRatedGAnimes();
 
         // Browse anime for rated PG13
-         ovaRatedPG13 = animeHTTP.getOvaAndRatedPG13Animes();
-         tvRatedPG13 = animeHTTP.getTvAndRatedPG13Animes();
-         MovieRatedPG13 = animeHTTP.getMovieAndRatedPG13Animes();
+        ovaRatedPG13 = animeHTTP.getOvaAndRatedPG13Animes();
+        tvRatedPG13 = animeHTTP.getTvAndRatedPG13Animes();
+        MovieRatedPG13 = animeHTTP.getMovieAndRatedPG13Animes();
 
-         // Browse Anime for rated R17
-         ovaRatedR17 = animeHTTP.getOvaAndRatedR17Animes();
-         tvRatedR17 = animeHTTP.getTvAndRatedR17Animes();
-         MovieRatedR17 = animeHTTP.getMovieAndRatedR17Animes();
+        // Browse Anime for rated R17
+        ovaRatedR17 = animeHTTP.getOvaAndRatedR17Animes();
+        tvRatedR17 = animeHTTP.getTvAndRatedR17Animes();
+        MovieRatedR17 = animeHTTP.getMovieAndRatedR17Animes();
 
 
         // Browse Anime for rated Rplus
@@ -106,7 +116,7 @@ public class GenreActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Anime> call, Response<Anime> response) {
 
-                            if(response.code() == 200) {
+                            if (response.code() == 200) {
 
                                 listAnimes = new ArrayList<>(response.body().getResults());
 
@@ -144,20 +154,26 @@ public class GenreActivity extends AppCompatActivity {
                     Toast.makeText(GenreActivity.this, "Please check your connection", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<Anime> call, Throwable t) {
 
             }
         });
 
+        // Bottom Nav
+        bottomNavigation();
+
+    }
+
+    private void bottomNavigation() {
         //Bottom Navigation Clicks
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // If Bottom Navigation is Clicked
-        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
-
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
                         startActivity(new Intent(GenreActivity.this, FullscreenActivity.class));
@@ -167,9 +183,84 @@ public class GenreActivity extends AppCompatActivity {
                         startActivity(new Intent(GenreActivity.this, SearchActivity.class));
                         finish();
                         break;
+                    case R.id.favorite:
+                        startActivity(new Intent(GenreActivity.this, FavoriteActivity.class));
+                        finish();
+                        break;
                 }
+                return false;
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent intent1 = new Intent(this, SettingsActivity.class);
+                startActivity(intent1);
+
+                return true;
+            case R.id.feedback:
+                Intent intent2 = new Intent(this, FeedbackActivity.class);
+                startActivity(intent2);
+
+                return true;
+            case R.id.developers:
+                Intent intent3 = new Intent(this, DevelopersActivity.class);
+                startActivity(intent3);
+
+                return true;
+            case R.id.logout:
+                exit();
+                return true;
+            case R.id.info:
+                Toast.makeText(this, "Developed by Robert Miras", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.logo:
+                Intent intent4 = new Intent(this, EditUserActivity.class);
+                startActivity(intent4);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void exit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Logout?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                SharedPreferences preferences = getSharedPreferences("MYINFO", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("isLoggedIn", false);
+                editor.commit();
+
+                startActivity(new Intent(GenreActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     private void inflateTabLayout(List<Results> listAnime,
@@ -233,24 +324,24 @@ public class GenreActivity extends AppCompatActivity {
     }
 
     // Create Call FROM API and Get the Data from API
-    private void getRatedPG13Anime()  {
+    private void getRatedPG13Anime() {
         // For PG13
         ovaRatedPG13.enqueue(new Callback<Anime>() {
             @Override
             public void onResponse(Call<Anime> call, Response<Anime> response) {
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     ovaPG = new ArrayList<>(response.body().getResults());
 
                     tvRatedPG13.enqueue(new Callback<Anime>() {
                         @Override
                         public void onResponse(Call<Anime> call, Response<Anime> response) {
-                            if(response.code() == 200) {
+                            if (response.code() == 200) {
                                 tvPG = new ArrayList<>(response.body().getResults());
 
                                 MovieRatedPG13.enqueue(new Callback<Anime>() {
                                     @Override
                                     public void onResponse(Call<Anime> call, Response<Anime> response) {
-                                        if(response.code() == 200) {
+                                        if (response.code() == 200) {
                                             moviePG = new ArrayList<>(response.body().getResults());
 
                                             // Pass Data to Adapter and ReyclerView
@@ -288,19 +379,19 @@ public class GenreActivity extends AppCompatActivity {
         ovaRatedR17.enqueue(new Callback<Anime>() {
             @Override
             public void onResponse(Call<Anime> call, Response<Anime> response) {
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     ovaRatedR17List = new ArrayList<>(response.body().getResults());
 
                     tvRatedR17.enqueue(new Callback<Anime>() {
                         @Override
                         public void onResponse(Call<Anime> call, Response<Anime> response) {
-                            if(response.code() == 200) {
+                            if (response.code() == 200) {
                                 tvRatedR17List = new ArrayList<>(response.body().getResults());
 
                                 MovieRatedR17.enqueue(new Callback<Anime>() {
                                     @Override
                                     public void onResponse(Call<Anime> call, Response<Anime> response) {
-                                        if(response.code() == 200) {
+                                        if (response.code() == 200) {
                                             MovieRatedR17List = new ArrayList<>(response.body().getResults());
 
                                             getRatedPlusAnimes();
@@ -335,19 +426,19 @@ public class GenreActivity extends AppCompatActivity {
         ovaRatedPlus.enqueue(new Callback<Anime>() {
             @Override
             public void onResponse(Call<Anime> call, Response<Anime> response) {
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     ovaRatedPlusList = new ArrayList<>(response.body().getResults());
 
                     tvRatedPlus.enqueue(new Callback<Anime>() {
                         @Override
                         public void onResponse(Call<Anime> call, Response<Anime> response) {
-                            if(response.code() == 200) {
+                            if (response.code() == 200) {
                                 tvRatedPlusList = new ArrayList<>(response.body().getResults());
 
                                 movieRatedPlus.enqueue(new Callback<Anime>() {
                                     @Override
                                     public void onResponse(Call<Anime> call, Response<Anime> response) {
-                                        if(response.code() == 200) {
+                                        if (response.code() == 200) {
                                             movieRatedPlusList = new ArrayList<>(response.body().getResults());
 
                                             // Show UI
@@ -383,6 +474,20 @@ public class GenreActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        // Register our broadcast receiver
+        registerReceiver(networkChangeListener, filter);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        unregisterReceiver(networkChangeListener);
+        super.onStop();
     }
 
 }

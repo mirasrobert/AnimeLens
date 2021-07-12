@@ -21,7 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     List<Results> animeList;
     Context context;
-    private RecyclerViewClickListener listener;
+    RecyclerViewClickListener listener;
 
     public RecyclerAdapter(List<Results> animeList, Context context, RecyclerViewClickListener listener) {
         this.animeList = animeList;

@@ -1,13 +1,17 @@
 package com.example.imotaku.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +23,13 @@ import com.example.imotaku.adapter.PopularRecyclerAdapter;
 import com.example.imotaku.adapter.RecyclerAdapter;
 import com.example.imotaku.model.Results;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class OvaFragment extends Fragment {
+
+    private static String TAG = "Category Fragment";
 
     public RecyclerView recyclerView, ovaRecycler, thisYearRecycler;
     public List<Results> listAnimes, ovaGList, movieGList;
@@ -113,4 +121,75 @@ public class OvaFragment extends Fragment {
         };
 
     }
+
+    @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+        Log.i(TAG,"onAttach");
+        Toast.makeText(getActivity(),"onAttach",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(TAG,"onCreate");
+        Toast.makeText(getActivity(),"onCreate",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i(TAG,"onActivityCreated");
+        Toast.makeText(getActivity(),"onActivityCreated",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG,"onStart");
+        Toast.makeText(getActivity(),"onStart",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG,"onResume");
+        Toast.makeText(getActivity(),"onResume",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG,"onPause");
+        Toast.makeText(getActivity(),"onPause",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG,"onStop");
+        Toast.makeText(getActivity(),"onStop",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG,"onDestroyView");
+        Toast.makeText(getActivity(),"onDestroyView",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"onDestroy");
+        Toast.makeText(getActivity(),"onDestroy",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG,"onDetach");
+        Toast.makeText(getActivity(),"onDetach",Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -8,10 +8,9 @@ import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.helper.widget.Layer;
 
+import com.example.imotaku.FullscreenActivity;
 import com.example.imotaku.R;
 
 // Use Broadcast Receiver
@@ -45,6 +44,7 @@ public class NetworkChangeListener extends BroadcastReceiver {
                     dialog.dismiss();
                     onReceive(context, intent);
 
+                    //Close the app
                     ((Activity) context).finish();
 
                 }

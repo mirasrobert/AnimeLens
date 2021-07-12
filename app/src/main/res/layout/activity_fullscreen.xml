@@ -8,7 +8,6 @@
     android:fillViewport="true">
 
     <FrameLayout
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_primary"
@@ -34,7 +33,7 @@
                 app:srcCompat="@drawable/logo" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loadingLottie"
@@ -58,6 +57,7 @@
         app:itemIconTint="@color/primary_light"
         app:menu="@menu/bottom_menu_navigation"
         android:layout_alignParentBottom="true"
+        app:labelVisibilityMode="labeled"
         />
 
 </RelativeLayout>

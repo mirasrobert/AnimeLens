@@ -21,7 +21,11 @@ android:fillViewport="true">
         android:background="@color/bg_primary"
         android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer"
 
-        />
+        >
+
+
+
+    </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -30,6 +34,7 @@ android:fillViewport="true">
         android:theme="@style/ThemeOverlay.ImOtaku.FullscreenContainer">
 
         <!--  MAIN CONTENT-->
+
         <TextView
             android:id="@+id/browse_anime"
             android:layout_width="wrap_content"
@@ -87,7 +92,6 @@ android:fillViewport="true">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popular_anime" />
 
-
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="80dp"
@@ -98,6 +102,8 @@ android:fillViewport="true">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo" />
+
+
 
         <!--   RECYCLER 3     -->
         <TextView

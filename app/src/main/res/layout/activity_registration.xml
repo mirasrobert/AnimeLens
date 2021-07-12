@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/blue_purple_background">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="395dp"
+            android:layout_height="334dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/register_imagecutie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="56dp"
+            android:drawableStart="@drawable/ic_baseline_account_circle_24"
+            android:hint=" Enter Nickname"
+            android:textColor="#F3F1F1"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+        <EditText
+            android:id="@+id/email_name"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="56dp"
+            android:drawableStart="@drawable/ic_baseline_person_24"
+            android:hint=" Enter Email"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/username" />
+
+        <EditText
+            android:id="@+id/email_pass"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="56dp"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:hint=" Enter Password"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_name" />
+
+        <Button
+            android:id="@+id/create_button"
+            android:layout_width="140dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="136dp"
+            android:layout_marginBottom="150dp"
+            android:background="@drawable/custom_button3"
+            android:hint="@string/create"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_pass" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

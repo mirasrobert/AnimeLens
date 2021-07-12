@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SettingsActivity">
+
+    <PreferenceCategory
+        android:summary="Username and password information"
+        android:title="Personal Information" >
+
+        <EditTextPreference
+            android:key="nickname"
+            android:summary="Enter your nickname "
+            android:title="Nickname" />
+
+        <EditTextPreference
+            android:key="pass"
+            android:summary="Enter your password"
+            android:title="Password" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:summary="Username and password information"
+        android:title="Application" >
+        <CheckBoxPreference
+            android:key="update"
+            android:summary="This option if selected will allow the application to check for latest version"
+            android:title="Check for updates" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,12 +1,20 @@
 package com.example.imotaku;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +24,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.imotaku.API.AnimeHTTP;
+import com.example.imotaku.database.DatabaseHelper;
+import com.example.imotaku.model.FavoriteAnime;
 import com.example.imotaku.model.Genre;
 import com.example.imotaku.model.SingleAnime;
+import com.example.imotaku.utility.NetworkChangeListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -33,6 +44,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AnimeDescriptionActivity extends AppCompatActivity {
 
+    // For Broadcast Receiver
+    NetworkChangeListener networkChangeListener = new NetworkChangeListener();
+
+    //LifeCycle
+    private static final String TAG = "animeDescriptionActivity";
+
     // Default Values
     public final String BASE_URL = "https://api.jikan.moe";
     public String url = "";
@@ -47,9 +64,18 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
     private Call<SingleAnime> singleAnimeCall;
     private List<Genre> genreList = new ArrayList<>();
 
+    // Global
+    public int mal_id;
+    public String title, types, scores, episode, img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //LOG
+        Log.i(TAG,"onCreate");
+
+        Toast.makeText(AnimeDescriptionActivity.this, "onCreate", Toast.LENGTH_SHORT).show();
+
         // Change status bar color
         getWindow().setStatusBarColor(ContextCompat.getColor(AnimeDescriptionActivity.this, R.color.light_blue_600));
 
@@ -72,7 +98,7 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
         source = findViewById(R.id.source);
 
         // Get the ID
-        int mal_id = 20;
+        mal_id = 20;
         // Get the extras that we passed on the intent
         Bundle extras = getIntent().getExtras();
 
@@ -111,13 +137,13 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
                     }
 
                      url = response.body().getUrl();
-                     String title = response.body().getTitle();
-                     String img = response.body().getImage_url();
-                     String scores = response.body().getScore();
+                     title = response.body().getTitle();
+                     img = response.body().getImage_url();
+                     scores = response.body().getScore();
                      ranks = (response.body().getRank() != null) ? response.body().getRank() : ranks;
                      String favorites = response.body().getFavorites();
-                     String types = response.body().getType();
-                     String episode = response.body().getEpisodes();
+                     types = response.body().getType();
+                     episode = response.body().getEpisodes();
 
                      String rating = response.body().getRating();
                      String source = response.body().getSource();
@@ -146,7 +172,6 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
 
              }
          });
-
 
     }
 
@@ -192,6 +217,9 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
         popularity.setText(popular);
         duration.setText(durations);
         source.setText(sources);
+
+        addToFavorites();
+
     }
 
 
@@ -226,13 +254,168 @@ public class AnimeDescriptionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-                break;
+                Intent intent1 = new Intent(this, SettingsActivity.class);
+                startActivity(intent1);
+                return true;
+            case R.id.feedback:
+                Intent intent2 = new Intent(this, FeedbackActivity.class);
+                startActivity(intent2);
+                return true;
+            case R.id.developers:
+                Intent intent3 = new Intent(this, DevelopersActivity.class);
+                startActivity(intent3);
+                return true;
+            case R.id.logout:
+                exit();
+                return true;
             case R.id.info:
-                Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Developed by Robert Miras", Toast.LENGTH_SHORT).show();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void exit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Logout?");
+        builder.setCancelable(true);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                SharedPreferences preferences = getSharedPreferences("MYINFO", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("isLoggedIn",false);
+                editor.commit();
+
+                startActivity(new Intent(AnimeDescriptionActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    // SQLITE Database
+    private void addToFavorites() {
+
+        animeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Call DB Helper
+                DatabaseHelper databaseHelper = new DatabaseHelper(AnimeDescriptionActivity.this);
+
+                // Add a new Favorite anime
+                FavoriteAnime favoriteAnime = new FavoriteAnime(mal_id, title, types, scores, episode, img);
+
+                if (databaseHelper.getOne(mal_id)) {
+
+                    databaseHelper.deleteOne(favoriteAnime);
+
+                    Toast.makeText(AnimeDescriptionActivity.this, "This anime has been removed on your list", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    String success = databaseHelper.addOne(favoriteAnime) ? "Added to your favorites" : "Something went wrong adding your anime";
+
+                    Toast.makeText(AnimeDescriptionActivity.this, success, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+    }
+
+    private void removeFromFavorites() {
+
+        animeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                // Call DB Helper
+                DatabaseHelper databaseHelper = new DatabaseHelper(AnimeDescriptionActivity.this);
+                
+                // Check if anime is already existing on the db.
+                if(databaseHelper.getOne(mal_id)) {
+                    // Add a new Favorite anime
+                    Toast.makeText(AnimeDescriptionActivity.this, "This anime is already added in your list", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    FavoriteAnime favoriteAnime = new FavoriteAnime(mal_id, title, types, scores, episode, img);
+
+                    Toast.makeText(AnimeDescriptionActivity.this, favoriteAnime.toString(), Toast.LENGTH_SHORT).show();
+
+                    String success = databaseHelper.addOne(favoriteAnime) ? "Added to your favorites" : "Something went wrong adding your anime";
+
+                    Toast.makeText(AnimeDescriptionActivity.this, success, Toast.LENGTH_SHORT).show();
+                }
+                
+
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        // Register our broadcast receiver
+        registerReceiver(networkChangeListener, filter);
+
+        Log.i(TAG,"onStart");
+        Toast.makeText(AnimeDescriptionActivity.this, "onStart", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG,"onResume");
+        Toast.makeText(AnimeDescriptionActivity.this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG,"onPause");
+        Toast.makeText(AnimeDescriptionActivity.this, "onPause", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        unregisterReceiver(networkChangeListener);
+
+        Log.i(TAG,"onStop");
+        Toast.makeText(AnimeDescriptionActivity.this, "onStop", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG,"onDestroy");
+        Toast.makeText(AnimeDescriptionActivity.this, "onDestroy", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG,"onRestart");
+        Toast.makeText(AnimeDescriptionActivity.this, "onRestart", Toast.LENGTH_SHORT).show();
     }
 }
